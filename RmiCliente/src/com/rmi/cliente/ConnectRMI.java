@@ -6,7 +6,6 @@
 package com.rmi.cliente;
 
 import com.rmi.comun.ICommonService;
-import java.awt.TextField;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -22,11 +21,13 @@ public class ConnectRMI {
     private Registry registry;
     private ICommonService icomun;
 
+    //Realiza la conexion atraves de RMI con el proyecto Servidor
     public ConnectRMI() throws RemoteException, NotBoundException {
         this.registry = LocateRegistry.getRegistry("localhost", Registry.REGISTRY_PORT);
         this.icomun = (ICommonService) this.registry.lookup("Connect");
     }
 
+    //Se conectan ambos proyectos
     public String connect(String text) throws RemoteException {
         StringBuilder commandd = new StringBuilder();
         String respuesta = icomun.connect();
@@ -34,6 +35,7 @@ public class ConnectRMI {
         return commandd.toString();
     }
 
+    //Obtiene la respuesta del numero CRC y se muestra en la pantalla
     public String request(String requested, String text, String command, JTextField crctxt) throws RemoteException {
         StringBuilder commandd = new StringBuilder();
         commandd.append(command).append("\n");
@@ -43,7 +45,8 @@ public class ConnectRMI {
         commandd.append("client#: Response: ").append(response).append("\n");
         return commandd.toString();
     }
-
+    
+    //Verifica si el CRC es correcto o no
     public String verifyCRC(String divisor, String data, String command) throws RemoteException {
         StringBuilder commande = new StringBuilder();
         commande.append(command).append("\n");

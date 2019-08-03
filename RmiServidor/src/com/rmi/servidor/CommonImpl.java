@@ -14,6 +14,13 @@ import java.rmi.RemoteException;
  */
 public class CommonImpl implements  ICommonService{
     
+    /**
+     * Retorna el resultado de la division del divisor por el binario
+     * @param divisor
+     * @param data
+     * @return
+     * @throws RemoteException 
+     */
     @Override
     public String callRequest(String divisor, String data) throws RemoteException {
         String code = data;
@@ -27,6 +34,10 @@ public class CommonImpl implements  ICommonService{
 
     @Override
     public String verifyCRC(String data, String divisor) throws RemoteException {
+        //En este caso como el divisor tiene una longitud, entonces lo que hace es tomar la misma longitud y validar
+        //si el numero en la posicion de esa longitud es igual al numero de la posicion del divisor,
+        //entonces agrega uno o cero respectivamente, como en esta division no hay acarreo entonces es una operacion
+        //binaria de 1 y 0
         int pointer = divisor.length();
         String result = data.substring(0, pointer);
         String remainder = "";
